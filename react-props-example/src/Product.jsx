@@ -9,7 +9,10 @@ function Product({ src, name, price }) {
           padding: "10px",
         }}
       >
-        <img src={src} style={{ width: "100%" }}></img>
+        <img
+          src={src}
+          style={{ width: "100%", height: "250px", objectFit: "cover" }}
+        ></img>
         <h2>{name}</h2>
         <h3>{price}</h3>
       </div>
