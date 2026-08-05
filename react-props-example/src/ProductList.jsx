@@ -10,9 +10,10 @@ function ProductList({ products }) {
         return (
           <Product
             key={product.id}
-            src={product.src}
-            name={product.name}
-            price={product.price}
+            // src={product.src}
+            // name={product.name}
+            // price={product.price}
+            {...product}
             //product={product}
           />
         );
