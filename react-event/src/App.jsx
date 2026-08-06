@@ -1,6 +1,16 @@
 import { useState } from "react";
 
 function App() {
+  const key = "age";
+  const person = { name: "홍길동", age: 32 };
+  console.log(person.name, "/", person["name"]);
+  console.log(person.age, "/", person["age"]);
+  console.log(person[key]);
+
+  const person02 = {
+    key: "노홍철",
+  };
+  console.log(person02);
   function hello() {
     alert("hello");
   }
@@ -18,7 +28,11 @@ function App() {
   }
   const [result, setResult] = useState(null);
 
-  const [formData, setFormData] = useState({ name: "", age: 20, major: "" });
+  const [formData, setFormData] = useState({
+    name: "정준하",
+    age: 20,
+    major: "수학",
+  });
   function handleChange(e) {
     //console.log(e.target);
     const { name, value } = e.target;
@@ -27,15 +41,38 @@ function App() {
       ...prev,
       [name]: value,
     }));
-    //console.log(formData);
+    // if (name === "name") {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     name: value,
+    //   }));
+    // }
+    // if (name === "age") {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     age: value,
+    //   }));
+    // }
+    // if (name === "major") {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     major: value,
+    //   }));
+    // }
+    console.log(formData);
   }
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); //새로고침되는 동작을 방지
     const response = await fetch("http://localhost:8080/user", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
+      // {
+      //   name:"유재석",
+      //   age:"32",
+      //   major:"개그"
+      // }
       body: JSON.stringify({
         ...formData,
         age: Number(formData.age),
@@ -97,20 +134,42 @@ function App() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>이름</label>
-          <input type="text" name="name" onChange={handleChange}></input>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          ></input>
         </div>
         <div>
           <label>나이</label>
-          <input type="text" name="age" onChange={handleChange}></input>
+          <input
+            type="text"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+          ></input>
         </div>
         <div>
           <label>전공</label>
-          <input type="text" name="major" onChange={handleChange}></input>
+          <input
+            type="text"
+            name="major"
+            value={formData.major}
+            onChange={handleChange}
+          ></input>
         </div>
         <div>
           <button>전송</button>
         </div>
       </form>
+      {result && (
+        <div>
+          <h2>{result.name}</h2>
+          <h2>{result.age}</h2>
+          <h2>{result.major}</h2>
+        </div>
+      )}
     </>
   );
 }
