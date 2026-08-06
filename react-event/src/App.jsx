@@ -16,7 +16,34 @@ function App() {
     console.log(data);
     setUser(data);
   }
+  const [result, setResult] = useState(null);
 
+  const [formData, setFormData] = useState({ name: "", age: 20, major: "" });
+  function handleChange(e) {
+    //console.log(e.target);
+    const { name, value } = e.target;
+    //console.log(name, "/", value);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    //console.log(formData);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const response = await fetch("http://localhost:8080/user", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+        age: Number(formData.age),
+      }),
+    });
+    const data = await response.json();
+    setResult(data);
+  }
   return (
     <>
       <h1>Hello React</h1>
@@ -65,6 +92,25 @@ function App() {
           <h2>{user.age}</h2>
         </div>
       )}
+      <hr></hr>
+      <h1>회원데이터 전송</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>이름</label>
+          <input type="text" name="name" onChange={handleChange}></input>
+        </div>
+        <div>
+          <label>나이</label>
+          <input type="text" name="age" onChange={handleChange}></input>
+        </div>
+        <div>
+          <label>전공</label>
+          <input type="text" name="major" onChange={handleChange}></input>
+        </div>
+        <div>
+          <button>전송</button>
+        </div>
+      </form>
     </>
   );
 }
