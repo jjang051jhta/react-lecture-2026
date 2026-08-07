@@ -1,6 +1,6 @@
 import Cat from "../assets/images/cat.png";
 import styles from "./HomeContent.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function HomeContent() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ function HomeContent() {
         <h2 className={styles.title}>나에게 맞는 집사는 누구?</h2>
         <img src={Cat} alt="cat" className={styles.cat}></img>
         <div>
-          <button
+          {/* <button
             className={styles.button}
             onClick={() => {
               //alert("클릭");
@@ -18,7 +18,10 @@ function HomeContent() {
             }}
           >
             START
-          </button>
+          </button> */}
+          <Link to="/question" className={styles.button}>
+            START
+          </Link>
         </div>
       </section>
     </>
