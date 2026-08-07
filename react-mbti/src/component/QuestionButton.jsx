@@ -1,10 +1,11 @@
-function QuestionButton({ question, no, nextQuestion, type }) {
+import styles from "./QuestionButton.module.css";
+function QuestionButton({ question, score, nextQuestion, type, className }) {
   return (
     <>
       <button
-        className="button"
+        className={styles.button}
         onClick={() => {
-          nextQuestion(no, type);
+          nextQuestion(score, type);
         }}
       >
         {question}
