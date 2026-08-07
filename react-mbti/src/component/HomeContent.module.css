@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+}
+.cat {
+  height: 300px;
+}
+.button {
+  background: none;
+  background-color: chocolate;
+  width: 80vw;
+  max-width: 300px;
+  padding: 15px;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+}
