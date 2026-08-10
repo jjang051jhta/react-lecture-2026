@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
+import QuestionResult from "../component/QuestionResult";
 
 function Result() {
   const [searchParams] = useSearchParams();
@@ -8,7 +9,8 @@ function Result() {
   return (
     <>
       <Header></Header>
-      <h1>{`당신의 mbti는 ${mbti}`}</h1>
+      {/* <h1>{`당신의 mbti는 ${mbti}`}</h1> */}
+      <QuestionResult></QuestionResult>
       <Footer></Footer>
     </>
   );

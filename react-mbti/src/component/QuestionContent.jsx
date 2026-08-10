@@ -17,6 +17,7 @@ function QuestionContent() {
   //quiz
   //map,filter,reduce
   const nextQuestion = (score, type) => {
+    //
     const newScore = totalScore.map(function (item, idx) {
       //console.log(item);
       if (item.id === type) {

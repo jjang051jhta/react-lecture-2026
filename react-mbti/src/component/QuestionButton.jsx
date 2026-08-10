@@ -9,6 +9,9 @@ function QuestionButton({ question, score, nextQuestion, type, className }) {
         }}
       >
         {question}
+        <hr></hr>
+        <h2>{type}</h2>
+        <h2>{score}</h2>
       </button>
     </>
   );
