@@ -1,0 +1,42 @@
+.detail {
+  width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 50px;
+  padding: 100px 0;
+}
+.detail .poster img {
+  border-radius: 0 50px 0 50px;
+  border: 5px solid #fff;
+  width: 300px;
+}
+.detail .info {
+  background: #fff;
+  padding: 50px;
+  border-radius: 50px 0 50px 0;
+}
+.detail .info .sub-title {
+  opacity: 0.5;
+  font-weight: 700;
+}
+.detail .title-box {
+  padding: 20px 0;
+  border-bottom: 1px dashed #333;
+}
+.detail .title-box h2 {
+  font-size: 32px;
+}
+.detail .detail-box {
+  padding: 20px 0;
+  border-bottom: 1px dashed #333;
+}
+.detail .genre {
+  margin-right: 10px;
+  display: inline-block;
+  padding: 5px 10px;
+  background: #0097dd;
+  color: #fff;
+  min-width: 50px;
+  border-radius: 100px;
+  text-align: center;
+}

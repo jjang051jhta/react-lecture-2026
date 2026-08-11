@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { useState, useEffect } from "react";
+import styles from "../css/MovieDetail.module.css";
 
 function MovieDetail() {
   const { id } = useParams();
@@ -35,47 +36,64 @@ function MovieDetail() {
     <>
       <Header></Header>
       <main>
-        <div className="detail">
-          <div className="poster">
+        <div className={styles.detail}>
+          <div className={styles.poster}>
             <img src={posterUrl}></img>
           </div>
-          <div className="info">
-            <div className="title-box">
+          <div className={styles.info}>
+            <div className={styles["title-box"]}>
               <h2>{detail.title}</h2>
               <p>{detail.original_title}</p>
             </div>
-            <div>
-              <h3 className="sub-title">장르</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>장르</h3>
               <p>
                 {detail.genres?.map((item) => {
-                  return <span key={item.id}>{item.name}</span>;
+                  return (
+                    <span key={item.id} className={styles.genre}>
+                      {item.name}
+                    </span>
+                  );
                 })}
               </p>
             </div>
-            <div>
-              <h3 className="sub-title">개봉일</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>개봉일</h3>
               <p>{detail.release_date}</p>
             </div>
-            <div>
-              <h3 className="sub-title">상영시간</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>상영시간</h3>
               <p>{detail.runtime}</p>
             </div>
-            <div>
-              <h3 className="sub-title">관객평점</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>관객평점</h3>
               <p>{detail.vote_average}</p>
             </div>
-            <div>
-              <h3 className="sub-title">관객투표</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>관객투표</h3>
               <p>{detail.vote_count}</p>
             </div>
-            <div>
-              <h3 className="sub-title">줄거리</h3>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>줄거리</h3>
               <p>{detail.overview}</p>
             </div>
           </div>
         </div>
       </main>
       <Footer></Footer>
+      <div
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/original${detail.backdrop_path})`,
+          backgroundSize: "cover",
+          backgroundPosition: "fixed",
+          position: "fixed",
+          width: "100%",
+          height: "100%",
+          left: 0,
+          top: 0,
+          zIndex: -1,
+        }}
+      ></div>
     </>
   );
 }
