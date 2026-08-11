@@ -7,7 +7,7 @@ function MovieCard({ movie }) {
       <article className={styles.card}>
         <div className={styles["poster-box"]}>
           <img src={posterUrl} alt="" className={styles.poster} />
-          <div className={styles.rating}>8.675</div>
+          <div className={styles.rating}>{movie.vote_average.toFixed(1)}</div>
         </div>
         <div className={styles.info}>
           <h2 className={styles.title}>{movie.title}</h2>
