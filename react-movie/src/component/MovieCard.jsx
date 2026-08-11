@@ -1,10 +1,11 @@
 //import Poster from "../assets/hero.png";
+import { Link } from "react-router-dom";
 import styles from "../css/MovieCard.module.css";
 function MovieCard({ movie }) {
   const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   return (
     <>
-      <article className={styles.card}>
+      <Link className={styles.card} to={`/movie/${movie.id}`}>
         <div className={styles["poster-box"]}>
           <img src={posterUrl} alt="" className={styles.poster} />
           <div className={styles.rating}>{movie.vote_average.toFixed(1)}</div>
@@ -15,7 +16,7 @@ function MovieCard({ movie }) {
           <p className={styles["release-date"]}>{movie.release_date}</p>
           <p className={styles.overview}>{movie.overview}</p>
         </div>
-      </article>
+      </Link>
     </>
   );
 }
