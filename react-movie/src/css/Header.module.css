@@ -1,0 +1,16 @@
+.header {
+  height: 60px;
+  background-color: #fff;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+.button {
+  position: absolute;
+  left: 20px;
+}

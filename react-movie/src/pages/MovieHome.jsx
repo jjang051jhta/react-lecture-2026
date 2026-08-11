@@ -33,7 +33,7 @@ function MovieHome() {
     <>
       <Header></Header>
       <main>
-        <MovieList></MovieList>
+        <MovieList movies={movies}></MovieList>
       </main>
       <Footer></Footer>
     </>

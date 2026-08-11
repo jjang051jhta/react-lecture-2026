@@ -1,9 +1,10 @@
+import styles from "../css/Header.module.css";
 function Header() {
   return (
     <>
-      <header>
-        <button> PREV </button>
-        <h1>MOVIE APP</h1>
+      <header className={styles.header}>
+        <button className={styles.button}> PREV </button>
+        <h1 className={styles.title}>MOVIE APP</h1>
       </header>
     </>
   );
