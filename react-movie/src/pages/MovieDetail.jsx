@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { useState, useEffect } from "react";
@@ -108,13 +108,13 @@ function MovieDetail() {
                       : noProfile;
                     return (
                       <SwiperSlide tag="li">
-                        <div>
+                        <Link to={`/actor/${item.id}`}>
                           <img
                             src={profile}
                             alt=""
                             className={styles.profile}
                           />
-                        </div>
+                        </Link>
                         <div className={styles.name}>{item.name}</div>
                       </SwiperSlide>
                     );
