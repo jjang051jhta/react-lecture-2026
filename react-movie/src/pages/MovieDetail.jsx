@@ -4,7 +4,7 @@ import Header from "../component/Header";
 import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
 
-//영화정보 = 
+//영화정보 =
 function MovieDetail() {
   const { id } = useParams();
   const token = import.meta.env.VITE_TMDB_TOKEN;
@@ -14,37 +14,36 @@ function MovieDetail() {
   //Hook은 리액트의 실행과정중에 필요한 작업을 한다.
   console.log("id===", id);
   const [detail, setDetail] = useState({});
-  const detail_movie_api = `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`;
+  const [casts, setCasts] = useState([]); //배우정보
 
-  const fetchMovies = async (url) => {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    setDetail(data);
-    console.log(data);
-    const creditResponse = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/credits?language=ko-KR`,
-      {
+  const fetchMovieDetail = async () => {
+    const headersOption = {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const [movieResponse, creditResponse] = await Promise.all([
+      fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko-KR`, {
         method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+        headers: headersOption,
+      }),
+      fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=ko-KR`, {
+        method: "GET",
+        headers: headersOption,
+      }),
+    ]);
+
+    const movieData = await movieResponse.json();
+    console.log(movieData);
+    setDetail(movieData);
     const creditData = await creditResponse.json();
-    console.log(creditData);
+    console.log(creditData.cast);
+    setCasts(creditData.cast);
   };
 
   //화면 렌더링후 한번 실행
   useEffect(() => {
-    fetchMovies(detail_movie_api);
-  }, []);
+    fetchMovieDetail();
+  }, [id]);
   const posterUrl = `https://image.tmdb.org/t/p/w500${detail.poster_path}`;
   return (
     <>
@@ -95,11 +94,17 @@ function MovieDetail() {
               <h3 className={styles["sub-title"]}>출연배우</h3>
               <div>
                 <ul>
-                  <li>이미지</li>
-                  <li>이미지</li>
-                  <li>이미지</li>
-                  <li>이미지</li>
-                  <li>이미지</li>
+                  {casts.map((item, idx) => {
+                    const profile = `https://image.tmdb.org/t/p/w300${item.profile_path}`;
+                    return (
+                      <li>
+                        <div>
+                          <img src={profile} alt="" />
+                        </div>
+                        <div>{item.name}</div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
