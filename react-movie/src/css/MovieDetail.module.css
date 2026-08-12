@@ -14,6 +14,8 @@
   border-radius: 0 50px 0 50px;
   border: 5px solid #fff;
   width: 300px;
+  aspect-ratio: 2/3;
+  object-fit: cover;
 }
 .detail .info {
   background: rgba(255, 255, 255, 0.85);

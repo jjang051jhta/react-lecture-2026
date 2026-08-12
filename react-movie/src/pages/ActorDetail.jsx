@@ -5,7 +5,10 @@ import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import noPoster from "../assets/no-poster.png";
-// Import Swiper styles
+
+import man from "../assets/man.png";
+import woman from "../assets/woman.png";
+
 import "swiper/css";
 //영화정보 =
 function ActorDetail() {
@@ -42,7 +45,14 @@ function ActorDetail() {
   useEffect(() => {
     fetchActorDetail();
   }, [id]);
-  const profileUrl = `https://image.tmdb.org/t/p/w500${actorDetail.profile_path}`;
+  let profileUrl;
+  if (actorDetail.profile_path) {
+    profileUrl = `https://image.tmdb.org/t/p/w500${actorDetail.profile_path}`;
+  } else if (actorDetail.gender === 1) {
+    profileUrl = woman;
+  } else {
+    profileUrl = man;
+  }
   return (
     <>
       <Header></Header>
@@ -55,26 +65,32 @@ function ActorDetail() {
             <div className={styles["title-box"]}>
               <h2>{actorDetail.name}</h2>
             </div>
-            <div className={styles["detail-box"]}>
-              <h3 className={styles["sub-title"]}>생일</h3>
-              <p>{actorDetail.birthday}</p>
-            </div>
-            <div className={styles["detail-box"]}>
-              <h3 className={styles["sub-title"]}>국적</h3>
-              <p>{actorDetail.place_of_birth}</p>
-            </div>
+            {actorDetail.birthday && (
+              <div className={styles["detail-box"]}>
+                <h3 className={styles["sub-title"]}>생일</h3>
+                <p>{actorDetail.birthday}</p>
+              </div>
+            )}
+            {actorDetail.place_of_birth && (
+              <div className={styles["detail-box"]}>
+                <h3 className={styles["sub-title"]}>국적</h3>
+                <p>{actorDetail.place_of_birth}</p>
+              </div>
+            )}
             <div className={styles["detail-box"]}>
               <h3 className={styles["sub-title"]}>인기도</h3>
               <p>{actorDetail.popularity}</p>
             </div>
-            <div className={styles["detail-box"]}>
-              <h3 className={styles["sub-title"]}>홈페이지</h3>
-              <p>
-                <a href={actorDetail.homepage} target="_blank">
-                  {actorDetail.homepage}
-                </a>
-              </p>
-            </div>
+            {actorDetail.homepage && (
+              <div className={styles["detail-box"]}>
+                <h3 className={styles["sub-title"]}>홈페이지</h3>
+                <p>
+                  <a href={actorDetail.homepage} target="_blank">
+                    {actorDetail.homepage}
+                  </a>
+                </p>
+              </div>
+            )}
 
             <div className={styles["detail-box"]}>
               <h3 className={styles["sub-title"]}>주요 출연작</h3>

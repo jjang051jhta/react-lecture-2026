@@ -91,10 +91,12 @@ function MovieDetail() {
               <h3 className={styles["sub-title"]}>관객투표</h3>
               <p>{detail.vote_count}</p>
             </div>
-            <div className={styles["detail-box"]}>
-              <h3 className={styles["sub-title"]}>줄거리</h3>
-              <p>{detail.overview}</p>
-            </div>
+            {detail.overview && (
+              <div className={styles["detail-box"]}>
+                <h3 className={styles["sub-title"]}>줄거리</h3>
+                <p>{detail.overview}</p>
+              </div>
+            )}
             <div className={styles["detail-box"]}>
               <h3 className={styles["sub-title"]}>출연배우</h3>
               <div className={styles["cast-box"]}>
