@@ -3,7 +3,10 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import noProfile from "../assets/user-profile.png";
+// Import Swiper styles
+import "swiper/css";
 //영화정보 =
 function MovieDetail() {
   const { id } = useParams();
@@ -92,20 +95,31 @@ function MovieDetail() {
             </div>
             <div className={styles["detail-box"]}>
               <h3 className={styles["sub-title"]}>출연배우</h3>
-              <div>
-                <ul>
+              <div className={styles["cast-box"]}>
+                <Swiper
+                  spaceBetween={50}
+                  slidesPerView={5}
+                  className={styles["cast-slide"]}
+                  wrapperTag="ul"
+                >
                   {casts.map((item, idx) => {
-                    const profile = `https://image.tmdb.org/t/p/w300${item.profile_path}`;
+                    const profile = item.profile_path
+                      ? `https://image.tmdb.org/t/p/w300${item.profile_path}`
+                      : noProfile;
                     return (
-                      <li>
+                      <SwiperSlide tag="li">
                         <div>
-                          <img src={profile} alt="" />
+                          <img
+                            src={profile}
+                            alt=""
+                            className={styles.profile}
+                          />
                         </div>
-                        <div>{item.name}</div>
-                      </li>
+                        <div className={styles.name}>{item.name}</div>
+                      </SwiperSlide>
                     );
                   })}
-                </ul>
+                </Swiper>
               </div>
             </div>
           </div>

@@ -67,3 +67,16 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.cast-box {
+  overflow: hidden;
+  width: 940px;
+}
+
+.profile {
+  width: 180px;
+  height: 220px;
+  object-fit: cover;
+}
+.name {
+  font-size: 14px;
+}
