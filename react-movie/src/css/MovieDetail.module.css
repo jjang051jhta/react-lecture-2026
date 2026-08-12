@@ -16,14 +16,13 @@
   width: 300px;
 }
 .detail .info {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   padding: 50px;
   border-radius: 50px 0 50px 0;
 }
 .detail .info .sub-title {
   opacity: 0.5;
-  font-weight: 500;
-  font-size: 16px;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 .detail .title-box {
@@ -34,10 +33,15 @@
   font-size: 32px;
 }
 .detail .detail-box {
+  font-weight: 700;
+  font-size: 16px;
   padding: 20px 0;
   border-bottom: 1px dashed #333;
 }
+.detail .detail-box p {
+}
 .detail .genre {
+  font-size: 16px;
   margin-right: 10px;
   display: inline-block;
   padding: 5px 10px;
@@ -49,7 +53,7 @@
 }
 .bg {
   background-size: cover;
-  background-position: fixed;
+  background-position: center;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -74,7 +78,7 @@
 
 .profile {
   width: 180px;
-  height: 220px;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
 }
 .name {

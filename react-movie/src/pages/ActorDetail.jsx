@@ -4,7 +4,7 @@ import Header from "../component/Header";
 import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import noProfile from "../assets/user-profile.png";
+import noPoster from "../assets/no-poster.png";
 // Import Swiper styles
 import "swiper/css";
 //영화정보 =
@@ -36,7 +36,7 @@ function ActorDetail() {
     const movieData = await movieResponse.json();
     setActorDetail(actorData);
     setMovieDetail(movieData.cast);
-    //console.log(actorData);
+    console.log(actorData);
     console.log(movieData);
   };
   useEffect(() => {
@@ -88,7 +88,7 @@ function ActorDetail() {
                   {movieDetail.map((item, idx) => {
                     const poster = item.poster_path
                       ? `https://image.tmdb.org/t/p/w300${item.poster_path}`
-                      : noProfile;
+                      : noPoster;
                     return (
                       <SwiperSlide tag="li">
                         <Link to={`/movie/${item.id}`}>
@@ -105,7 +105,12 @@ function ActorDetail() {
         </div>
       </main>
       <Footer></Footer>
-      <div className={styles.bg}></div>
+      <div
+        className={styles.bg}
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/original${actorDetail.profile_path})`,
+        }}
+      ></div>
     </>
   );
 }

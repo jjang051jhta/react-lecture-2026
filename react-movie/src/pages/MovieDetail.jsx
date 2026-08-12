@@ -4,7 +4,9 @@ import Header from "../component/Header";
 import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import noProfile from "../assets/user-profile.png";
+
+import man from "../assets/man.png";
+import woman from "../assets/woman.png";
 // Import Swiper styles
 import "swiper/css";
 //영화정보 =
@@ -105,7 +107,9 @@ function MovieDetail() {
                   {casts.map((item, idx) => {
                     const profile = item.profile_path
                       ? `https://image.tmdb.org/t/p/w300${item.profile_path}`
-                      : noProfile;
+                      : item.gender === 1
+                        ? woman
+                        : man;
                     return (
                       <SwiperSlide tag="li">
                         <Link to={`/actor/${item.id}`}>
