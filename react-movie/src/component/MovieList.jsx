@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 import styles from "../css/MovieList.module.css";
-function MovieList({ movies }) {
+function MovieList({ movies, handleMore }) {
   //console.log("props.movies===", movies);
   return (
     <>
@@ -9,6 +9,7 @@ function MovieList({ movies }) {
           console.log(idx + 1, "===", movie);
           return <MovieCard movie={movie}></MovieCard>;
         })}
+        {/* <button onClick={handleMore}>MORE</button> */}
       </section>
     </>
   );

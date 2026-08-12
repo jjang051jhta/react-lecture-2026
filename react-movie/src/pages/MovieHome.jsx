@@ -26,6 +26,7 @@ function MovieHome() {
     console.log(data.results);
   };
   //화면 렌더링후 한번 실행
+
   useEffect(() => {
     fetchMovies(POPULAR_API);
   }, []);

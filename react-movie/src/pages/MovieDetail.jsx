@@ -4,6 +4,7 @@ import Header from "../component/Header";
 import { useState, useEffect } from "react";
 import styles from "../css/MovieDetail.module.css";
 
+//영화정보 = 
 function MovieDetail() {
   const { id } = useParams();
   const token = import.meta.env.VITE_TMDB_TOKEN;
@@ -26,7 +27,20 @@ function MovieDetail() {
     const data = await response.json();
     setDetail(data);
     console.log(data);
+    const creditResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/credits?language=ko-KR`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    const creditData = await creditResponse.json();
+    console.log(creditData);
   };
+
   //화면 렌더링후 한번 실행
   useEffect(() => {
     fetchMovies(detail_movie_api);
@@ -77,21 +91,26 @@ function MovieDetail() {
               <h3 className={styles["sub-title"]}>줄거리</h3>
               <p>{detail.overview}</p>
             </div>
+            <div className={styles["detail-box"]}>
+              <h3 className={styles["sub-title"]}>출연배우</h3>
+              <div>
+                <ul>
+                  <li>이미지</li>
+                  <li>이미지</li>
+                  <li>이미지</li>
+                  <li>이미지</li>
+                  <li>이미지</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </main>
       <Footer></Footer>
       <div
+        className={styles.bg}
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original${detail.backdrop_path})`,
-          backgroundSize: "cover",
-          backgroundPosition: "fixed",
-          position: "fixed",
-          width: "100%",
-          height: "100%",
-          left: 0,
-          top: 0,
-          zIndex: -1,
         }}
       ></div>
     </>
