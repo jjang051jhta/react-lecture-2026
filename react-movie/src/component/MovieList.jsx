@@ -9,8 +9,10 @@ function MovieList({ movies, handleMore }) {
           console.log(idx + 1, "===", movie);
           return <MovieCard movie={movie}></MovieCard>;
         })}
-        {/* <button onClick={handleMore}>MORE</button> */}
       </section>
+      <div className={styles["more-box"]}>
+        <button onClick={handleMore}>more</button>
+      </div>
     </>
   );
 }

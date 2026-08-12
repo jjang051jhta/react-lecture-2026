@@ -3,8 +3,6 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import MovieList from "../component/MovieList";
 
-const POPULAR_API =
-  "https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1";
 function MovieHome() {
   const token = import.meta.env.VITE_TMDB_TOKEN;
   console.log("token===", token);
@@ -12,8 +10,11 @@ function MovieHome() {
   //화면 갱신이 필요한 변수는 useState라는 Hook을 이용한다.
   //Hook은 리액트의 실행과정중에 필요한 작업을 한다.
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const fetchMovies = async (url) => {
+  const fetchMovies = async (page) => {
+    console.log("fetchMovies page===", page);
+    const url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -22,19 +23,28 @@ function MovieHome() {
       },
     });
     const data = await response.json();
-    setMovies(data.results);
+    setMovies((prevMovies) => {
+      console.log("prevMovies.length===", prevMovies.length);
+      return [...prevMovies, ...data.results];
+    });
+    //setMovies((prevMovies) => [...prevMovies, ...data.results]);
     console.log(data.results);
   };
   //화면 렌더링후 한번 실행
 
   useEffect(() => {
-    fetchMovies(POPULAR_API);
-  }, []);
+    fetchMovies(page);
+  }, [page]);
+
+  const handleMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   return (
     <>
       <Header></Header>
       <main>
-        <MovieList movies={movies}></MovieList>
+        <MovieList movies={movies} handleMore={handleMore}></MovieList>
       </main>
       <Footer></Footer>
     </>

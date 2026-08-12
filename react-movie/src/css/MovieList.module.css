@@ -4,3 +4,14 @@
   gap: 50px;
   padding: 100px;
 }
+.more-box {
+  display: flex;
+  justify-content: center;
+  margin: 100px;
+}
+.more-box button {
+  padding: 10px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  font-weight: 700;
+}
