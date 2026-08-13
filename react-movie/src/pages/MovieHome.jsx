@@ -12,6 +12,7 @@ function MovieHome() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
   const fetchMovies = async (page) => {
     if (loading) return;
@@ -41,6 +42,7 @@ function MovieHome() {
     }
     console.log("loading===", loading);
   };
+
   useEffect(() => {
     fetchMovies(page);
   }, [page]);
@@ -69,10 +71,42 @@ function MovieHome() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [loading]);
-
+  const searchMovie = async () => {
+    //console.log("searchMovie");
+    if (keyword.trim() === "") {
+      return;
+    }
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&language=ko-KR&page=1`;
+      console.log("url===", url);
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setMovies(data.results);
+      //console.log(data.results);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      //여기는 무조건 한번 실행
+      console.log("finally");
+      setLoading(false);
+    }
+    console.log("loading===", loading);
+  };
   return (
     <>
-      <Header></Header>
+      <Header
+        searchMovie={searchMovie}
+        keyword={keyword}
+        setKeyword={setKeyword}
+      ></Header>
       <main>
         <MovieList movies={movies} handleMore={handleMore}></MovieList>
       </main>
