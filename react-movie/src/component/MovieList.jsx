@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 import styles from "../css/MovieList.module.css";
-function MovieList({ movies, handleMore }) {
+function MovieList({ movies, handleMore, page, totalPages }) {
   //console.log("props.movies===", movies);
   return (
     <>
@@ -10,9 +10,11 @@ function MovieList({ movies, handleMore }) {
           return <MovieCard movie={movie}></MovieCard>;
         })}
       </section>
-      <div className={styles["more-box"]}>
-        <button onClick={handleMore}>more</button>
-      </div>
+      {page < totalPages && (
+        <div className={styles["more-box"]}>
+          <button onClick={handleMore}>more</button>
+        </div>
+      )}
     </>
   );
 }

@@ -25,6 +25,9 @@
 }
 .poster-box .poster {
   width: 200px;
+  height: 300px;
+  object-fit: cover;
+  background-color: #fff;
   border: 5px solid #fff;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }

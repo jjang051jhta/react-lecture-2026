@@ -14,7 +14,7 @@ function MovieHome() {
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [isSearch, setIsSearch] = useState(false);
-
+  const [totalPages, setTotalPages] = useState(1);
   const fetchMovies = async (page = 1) => {
     if (loading) return;
     setLoading(true);
@@ -37,6 +37,8 @@ function MovieHome() {
       });
       const data = await response.json();
       // 1페이지 → 기존 목록을 검색 결과로 교체
+      setTotalPages(data.total_pages);
+
       if (page === 1) {
         setMovies(data.results);
       } else {
@@ -59,6 +61,10 @@ function MovieHome() {
 
   const handleMore = () => {
     if (loading) return;
+    if (page >= totalPages) {
+      console.log("더 이상 불러올 영화가 없습니다.");
+      return;
+    }
     setPage((prevPage) => prevPage + 1);
   };
   useEffect(() => {
@@ -90,7 +96,12 @@ function MovieHome() {
         setKeyword={setKeyword}
       ></Header>
       <main>
-        <MovieList movies={movies} handleMore={handleMore}></MovieList>
+        <MovieList
+          movies={movies}
+          handleMore={handleMore}
+          page={page}
+          totalPages={totalPages}
+        ></MovieList>
       </main>
       <Footer></Footer>
     </>

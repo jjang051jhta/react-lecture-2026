@@ -1,8 +1,11 @@
 //import Poster from "../assets/hero.png";
+import noPoster from "../assets/no-poster.png";
 import { Link } from "react-router-dom";
 import styles from "../css/MovieCard.module.css";
 function MovieCard({ movie }) {
-  const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : noPoster;
   return (
     <>
       <Link className={styles.card} to={`/movie/${movie.id}`}>
