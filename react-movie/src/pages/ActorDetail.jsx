@@ -40,10 +40,6 @@ function ActorDetail() {
     setMovieDetail(movieData.cast);
   };
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
     fetchActorDetail();
   }, [id]);
   let profileUrl;
