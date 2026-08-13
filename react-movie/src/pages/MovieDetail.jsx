@@ -45,8 +45,14 @@ function MovieDetail() {
 
   //화면 렌더링후 한번 실행
   useEffect(() => {
+    //window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     fetchMovieDetail();
   }, [id]);
+
   const posterUrl = `https://image.tmdb.org/t/p/w500${detail.poster_path}`;
   return (
     <>

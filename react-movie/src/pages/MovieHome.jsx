@@ -15,6 +15,7 @@ function MovieHome() {
 
   const fetchMovies = async (page) => {
     if (loading) return;
+    setLoading(true);
     try {
       const url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
       const response = await fetch(url, {
