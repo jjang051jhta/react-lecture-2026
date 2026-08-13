@@ -1,6 +1,6 @@
 import { MdSearch } from "react-icons/md";
 import styles from "../css/Search.module.css";
-function Search({ searchMovie, keyword, setKeyword }) {
+function Search({ fetchMovies, keyword, setKeyword }) {
   return (
     <>
       <div className={styles["search-box"]}>
@@ -15,7 +15,7 @@ function Search({ searchMovie, keyword, setKeyword }) {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               //console.log("enter");
-              searchMovie();
+              fetchMovies();
             }
           }}
         />

@@ -13,12 +13,21 @@ function MovieHome() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [isSearch, setIsSearch] = useState(false);
 
-  const fetchMovies = async (page) => {
+  const fetchMovies = async (page = 1) => {
     if (loading) return;
     setLoading(true);
     try {
-      const url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
+      let url = "";
+      // 검색어가 있으면 검색
+      if (keyword.trim() !== "") {
+        url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&language=ko-KR&page=${page}`;
+        setIsSearch(true);
+      } else {
+        url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
+        setIsSearch(false);
+      }
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -27,12 +36,14 @@ function MovieHome() {
         },
       });
       const data = await response.json();
-      setMovies((prevMovies) => {
-        //console.log("prevMovies.length===", prevMovies.length);
-        return [...prevMovies, ...data.results];
-      });
-      //setMovies((prevMovies) => [...prevMovies, ...data.results]);
-      //console.log(data.results);
+      // 1페이지 → 기존 목록을 검색 결과로 교체
+      if (page === 1) {
+        setMovies(data.results);
+      } else {
+        setMovies((prevMovies) => {
+          return [...prevMovies, ...data.results];
+        });
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -42,10 +53,9 @@ function MovieHome() {
     }
     console.log("loading===", loading);
   };
-
   useEffect(() => {
     fetchMovies(page);
-  }, [page]);
+  }, [page, isSearch]);
 
   const handleMore = () => {
     if (loading) return;
@@ -71,39 +81,11 @@ function MovieHome() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [loading]);
-  const searchMovie = async () => {
-    //console.log("searchMovie");
-    if (keyword.trim() === "") {
-      return;
-    }
-    if (loading) return;
-    setLoading(true);
-    try {
-      const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&language=ko-KR&page=1`;
-      console.log("url===", url);
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setMovies(data.results);
-      //console.log(data.results);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //여기는 무조건 한번 실행
-      console.log("finally");
-      setLoading(false);
-    }
-    console.log("loading===", loading);
-  };
+
   return (
     <>
       <Header
-        searchMovie={searchMovie}
+        fetchMovies={fetchMovies}
         keyword={keyword}
         setKeyword={setKeyword}
       ></Header>
