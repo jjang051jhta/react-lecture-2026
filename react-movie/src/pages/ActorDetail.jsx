@@ -16,7 +16,6 @@ function ActorDetail() {
   const token = import.meta.env.VITE_TMDB_TOKEN;
   const [actorDetail, setActorDetail] = useState({});
   const [movieDetail, setMovieDetail] = useState([]);
-  console.log(token);
   const fetchActorDetail = async () => {
     const headersOption = {
       accept: "application/json",
@@ -39,8 +38,6 @@ function ActorDetail() {
     const movieData = await movieResponse.json();
     setActorDetail(actorData);
     setMovieDetail(movieData.cast);
-    console.log(actorData);
-    console.log(movieData);
   };
   useEffect(() => {
     fetchActorDetail();

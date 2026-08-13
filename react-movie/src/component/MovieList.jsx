@@ -6,7 +6,7 @@ function MovieList({ movies, handleMore }) {
     <>
       <section className={styles.list}>
         {movies.map((movie, idx) => {
-          console.log(idx + 1, "===", movie);
+          //console.log(idx + 1, "===", movie);
           return <MovieCard movie={movie}></MovieCard>;
         })}
       </section>

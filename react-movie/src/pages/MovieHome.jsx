@@ -11,34 +11,63 @@ function MovieHome() {
   //Hook은 리액트의 실행과정중에 필요한 작업을 한다.
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const fetchMovies = async (page) => {
-    console.log("fetchMovies page===", page);
-    const url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    setMovies((prevMovies) => {
-      console.log("prevMovies.length===", prevMovies.length);
-      return [...prevMovies, ...data.results];
-    });
-    //setMovies((prevMovies) => [...prevMovies, ...data.results]);
-    console.log(data.results);
+    if (loading) return;
+    try {
+      const url = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${page}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setMovies((prevMovies) => {
+        //console.log("prevMovies.length===", prevMovies.length);
+        return [...prevMovies, ...data.results];
+      });
+      //setMovies((prevMovies) => [...prevMovies, ...data.results]);
+      //console.log(data.results);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      //여기는 무조건 한번 실행
+      console.log("finally");
+      setLoading(false);
+    }
+    console.log("loading===", loading);
   };
-  //화면 렌더링후 한번 실행
-
   useEffect(() => {
     fetchMovies(page);
   }, [page]);
 
   const handleMore = () => {
+    if (loading) return;
     setPage((prevPage) => prevPage + 1);
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      //console.log("scrollY===", window.scrollY);
+      //console.log("windowHeight===", window.innerHeight);
+      //console.log("documentHeight===", document.documentElement.scrollHeight);
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      if (scrollTop + windowHeight >= documentHeight - 300 && !loading) {
+        console.log("바닥에 닿았다.");
+        console.log("page===", page);
+        console.log("loading====", loading);
+        handleMore();
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading]);
 
   return (
     <>

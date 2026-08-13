@@ -13,11 +13,9 @@ import "swiper/css";
 function MovieDetail() {
   const { id } = useParams();
   const token = import.meta.env.VITE_TMDB_TOKEN;
-  console.log("token===", token);
   //리액트는 데이터만 신경쓰면 된다. 화면 그리는건 react가 한다.
   //화면 갱신이 필요한 변수는 useState라는 Hook을 이용한다.
   //Hook은 리액트의 실행과정중에 필요한 작업을 한다.
-  console.log("id===", id);
   const [detail, setDetail] = useState({});
   const [casts, setCasts] = useState([]); //배우정보
 
@@ -38,10 +36,10 @@ function MovieDetail() {
     ]);
 
     const movieData = await movieResponse.json();
-    console.log(movieData);
+    //console.log(movieData);
     setDetail(movieData);
     const creditData = await creditResponse.json();
-    console.log(creditData.cast);
+    //console.log(creditData.cast);
     setCasts(creditData.cast);
   };
 
