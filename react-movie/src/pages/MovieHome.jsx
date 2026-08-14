@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import MovieList from "../component/MovieList";
+import Counter from "../component/Counter";
 
 function MovieHome() {
+  const [count, setCount] = useState(0);
+  const increase = () => {
+    setCount(count + 1);
+  };
+
   const token = import.meta.env.VITE_TMDB_TOKEN;
   console.log("token===", token);
   //리액트는 데이터만 신경쓰면 된다. 화면 그리는건 react가 한다.
@@ -90,7 +96,10 @@ function MovieHome() {
 
   return (
     <>
+      <Counter></Counter>
       <Header
+        count={count}
+        increase={increase}
         fetchMovies={fetchMovies}
         keyword={keyword}
         setKeyword={setKeyword}

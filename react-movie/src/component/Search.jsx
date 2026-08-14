@@ -1,8 +1,10 @@
 import { MdSearch } from "react-icons/md";
 import styles from "../css/Search.module.css";
-function Search({ fetchMovies, keyword, setKeyword }) {
+function Search({ fetchMovies, keyword, setKeyword, increase, count }) {
   return (
     <>
+      <h1>count : {count}</h1>
+      <button onClick={increase}>+</button>
       <div className={styles["search-box"]}>
         <input
           type="text"
