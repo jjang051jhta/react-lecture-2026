@@ -2,7 +2,7 @@ import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 import styles from "../css/Header.module.css";
 import Search from "./Search";
-function Header({ fetchMovies, keyword, setKeyword, count, increase }) {
+function Header({ fetchMovies, keyword, setKeyword }) {
   return (
     <>
       <header className={styles.header}>
@@ -17,8 +17,6 @@ function Header({ fetchMovies, keyword, setKeyword, count, increase }) {
           fetchMovies={fetchMovies}
           keyword={keyword}
           setKeyword={setKeyword}
-          count={count}
-          increase={increase}
         ></Search>
       </header>
     </>

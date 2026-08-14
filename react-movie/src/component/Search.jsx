@@ -1,6 +1,9 @@
 import { MdSearch } from "react-icons/md";
 import styles from "../css/Search.module.css";
-function Search({ fetchMovies, keyword, setKeyword, increase, count }) {
+import useCountStore from "../store/useCountStore";
+function Search({ fetchMovies, keyword, setKeyword }) {
+  const count = useCountStore((state) => state.count);
+  const increase = useCountStore((state) => state.increase);
   return (
     <>
       <h1>count : {count}</h1>
