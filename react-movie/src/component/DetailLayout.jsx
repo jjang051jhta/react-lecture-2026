@@ -1,15 +1,19 @@
 import Footer from "./Footer";
 import Header from "./Header";
+import styles from "../css/MovieDetail.module.css";
 
-function DetailLayout({ children }) {
+function DetailLayout({ children, backgroundImage }) {
   return (
     <>
       <Header></Header>
-      <main>
-        <h1>여기는 공통 요소들이 모여 있는 곳입니다.</h1>
-        {children}
-      </main>
+      <main>{children}</main>
       <Footer></Footer>
+      <div
+        className={styles.bg}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+      ></div>
     </>
   );
 }
