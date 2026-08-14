@@ -11,13 +11,17 @@ function MovieHome() {
   //화면 갱신이 필요한 변수는 useState라는 Hook을 이용한다.
   //Hook은 리액트의 실행과정중에 필요한 작업을 한다.
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1);
+  //const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   //const [keyword, setKeyword] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const keyword = useMovieStore((state) => state.keyword);
-  // const setKeyword = useMovieStore((state) => state.setKeyword);
+  const page = useMovieStore((state) => state.page);
+  const nextPage = useMovieStore((state) => state.nextPage);
+  const resetPage = useMovieStore((state) => state.resetPage);
+  const setPage = useMovieStore((state) => state.setPage);
+
   const fetchMovies = async (page = 1) => {
     if (loading) return;
     setLoading(true);
@@ -60,7 +64,7 @@ function MovieHome() {
   };
   useEffect(() => {
     fetchMovies(page);
-  }, [page, isSearch]);
+  }, [page, isSearch, keyword]);
 
   const handleMore = () => {
     if (loading) return;
@@ -68,7 +72,8 @@ function MovieHome() {
       console.log("더 이상 불러올 영화가 없습니다.");
       return;
     }
-    setPage((prevPage) => prevPage + 1);
+    //setPage((prevPage) => prevPage + 1);
+    nextPage();
   };
   useEffect(() => {
     const handleScroll = () => {

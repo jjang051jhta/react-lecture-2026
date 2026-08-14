@@ -5,6 +5,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+  z-index: 99;
 }
 .title {
   font-size: 20px;
