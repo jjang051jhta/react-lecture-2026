@@ -3,7 +3,7 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import MovieList from "../component/MovieList";
 import Counter from "../component/Counter";
-
+import useMovieStore from "../store/useMovieStore";
 function MovieHome() {
   const token = import.meta.env.VITE_TMDB_TOKEN;
   console.log("token===", token);
@@ -13,9 +13,11 @@ function MovieHome() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [keyword, setKeyword] = useState("");
+  //const [keyword, setKeyword] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
+  const keyword = useMovieStore((state) => state.keyword);
+  // const setKeyword = useMovieStore((state) => state.setKeyword);
   const fetchMovies = async (page = 1) => {
     if (loading) return;
     setLoading(true);
@@ -91,12 +93,8 @@ function MovieHome() {
 
   return (
     <>
-      <Counter></Counter>
-      <Header
-        fetchMovies={fetchMovies}
-        keyword={keyword}
-        setKeyword={setKeyword}
-      ></Header>
+      {/* <Counter></Counter> */}
+      <Header fetchMovies={fetchMovies}></Header>
       <main>
         <MovieList
           movies={movies}

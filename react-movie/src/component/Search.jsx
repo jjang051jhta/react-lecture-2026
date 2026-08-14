@@ -1,13 +1,16 @@
 import { MdSearch } from "react-icons/md";
 import styles from "../css/Search.module.css";
 import useCountStore from "../store/useCountStore";
-function Search({ fetchMovies, keyword, setKeyword }) {
-  const count = useCountStore((state) => state.count);
-  const increase = useCountStore((state) => state.increase);
+import useMovieStore from "../store/useMovieStore";
+function Search({ fetchMovies }) {
+  // const count = useCountStore((state) => state.count);
+  // const increase = useCountStore((state) => state.increase);
+  const keyword = useMovieStore((state) => state.keyword);
+  const setKeyword = useMovieStore((state) => state.setKeyword);
   return (
     <>
-      <h1>count : {count}</h1>
-      <button onClick={increase}>+</button>
+      {/* <h1>count : {count}</h1> */}
+      {/* <button onClick={increase}>+</button> */}
       <div className={styles["search-box"]}>
         <input
           type="text"
