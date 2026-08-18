@@ -31,7 +31,8 @@ function StoryUploadForm() {
       method: "post",
       body: formData,
     });
-    const data = await response.text();
+    console.log(response.status);
+    const data = await response.json();
     console.log(data);
   };
   return (
