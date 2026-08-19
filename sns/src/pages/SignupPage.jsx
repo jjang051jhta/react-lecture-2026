@@ -2,9 +2,34 @@ import { useState } from "react";
 
 function SignupPage() {
   const [userId, setUserId] = useState("");
+  const [idMessage, setIdMessage] = useState("");
+  const [idAvailable, setIdAvailable] = useState(false);
   const [userPassword, setUserPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [profile, setProfile] = useState(null);
+
+  const handleUserId = async (e) => {
+    const value = e.target.value;
+    console.log(value);
+    setUserId(value);
+    if (value.trim() === "") {
+      setIdMessage("");
+      setIdAvailable(false);
+      return;
+    }
+    const response = await fetch(
+      `http://localhost:8080/api/member/check-userid?userId=${value}`,
+    );
+    const data = await response.json();
+    console.log(data);
+    if (data.available) {
+      setIdMessage("사용가능한 아이디입니다.");
+      setIdAvailable(true);
+    } else {
+      setIdMessage("이미 사용중인 아이디입니다.");
+      setIdAvailable(false);
+    }
+  };
   const handleImage = (e) => {
     const file = e.target.files[0];
 
@@ -34,13 +59,10 @@ function SignupPage() {
       <section>
         <form onSubmit={saveMember}>
           <div>
-            <input
-              type="text"
-              placeholder="user id"
-              onChange={(e) => {
-                setUserId(e.target.value);
-              }}
-            />
+            <input type="text" placeholder="user id" onChange={handleUserId} />
+          </div>
+          <div style={{ color: idAvailable ? "green" : "red" }}>
+            {idMessage}
           </div>
           <div>
             <input
