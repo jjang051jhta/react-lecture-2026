@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function StoryUploadForm() {
+function StoryUploadForm({ loadStories }) {
   const [writer, setWriter] = useState("");
-  const [content, setCotent] = useState("");
+  const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const handleImage = (e) => {
     //console.log(e.target.files[0]);
@@ -34,6 +34,9 @@ function StoryUploadForm() {
     console.log(response.status);
     const data = await response.json();
     console.log(data);
+    setWriter("");
+    setContent("");
+    loadStories();
   };
   return (
     <>
@@ -50,7 +53,7 @@ function StoryUploadForm() {
             <textarea
               name=""
               id=""
-              onChange={(e) => setCotent(e.target.value)}
+              onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
           <div>
