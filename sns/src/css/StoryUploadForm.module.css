@@ -1,0 +1,160 @@
+.formSection {
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 28px;
+
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* 하나의 입력 영역 */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* label */
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* 이름 */
+.input {
+  width: 100%;
+  height: 46px;
+
+  padding: 0 14px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  font-size: 15px;
+  outline: none;
+
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #333;
+}
+
+/* 내용 */
+.textarea {
+  width: 100%;
+  min-height: 130px;
+
+  padding: 14px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.5;
+
+  resize: vertical;
+  outline: none;
+
+  transition: border-color 0.2s;
+}
+
+.textarea:focus {
+  border-color: #333;
+}
+
+/* 파일 영역 */
+.fileBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  background: #f8f8f8;
+
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+}
+
+/* 실제 input file 숨기기 */
+.fileInput {
+  display: none;
+}
+
+/* 커스텀 파일 버튼 */
+.fileButton {
+  flex-shrink: 0;
+
+  padding: 10px 16px;
+
+  background: #333;
+  color: #fff;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.fileButton:hover {
+  background: #555;
+}
+
+/* 선택된 파일명 */
+.fileName {
+  font-size: 13px;
+  color: #777;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 게시 버튼 */
+.submitButton {
+  width: 100%;
+  height: 50px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #222;
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.submitButton:hover {
+  background: #444;
+}
+
+.submitButton:active {
+  transform: scale(0.99);
+}

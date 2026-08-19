@@ -1,0 +1,134 @@
+.title {
+  width: 100%;
+  max-width: 600px;
+
+  margin: 40px auto 15px;
+
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* 전체 영역 */
+.storySection {
+  width: 100%;
+  max-width: 600px;
+
+  margin: 0 auto 50px;
+}
+
+/* ul 초기화 */
+.storyList {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 각각의 게시물 */
+.storyItem {
+  overflow: hidden;
+
+  background: #fff;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+}
+
+/* 작성자 영역 */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 16px;
+}
+
+/* 프로필 이미지 대신 글자 */
+.avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #222;
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* 작성자 */
+.writer {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* 이미지 영역 */
+.imageBox {
+  width: 100%;
+
+  background: #f5f5f5;
+}
+
+/* 게시물 이미지 */
+.storyImage {
+  display: block;
+
+  width: 100%;
+  max-height: 550px;
+
+  object-fit: cover;
+}
+
+/* 내용 영역 */
+.contentBox {
+  padding: 16px;
+}
+
+/* 게시물 내용 */
+.content {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444;
+
+  word-break: break-word;
+}
+
+/* 작성자 */
+.content strong {
+  margin-right: 4px;
+
+  color: #222;
+  font-weight: 700;
+}
+
+/* 게시물이 없을 때 */
+.empty {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  background: #fafafa;
+
+  border: 1px solid #eee;
+  border-radius: 12px;
+
+  color: #999;
+  font-size: 14px;
+}
