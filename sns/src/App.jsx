@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import StoryList from "./pages/StoryList";
+import StoryPage from "./pages/StoryPage";
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<StoryList />}></Route>
+        <Route path="/" element={<StoryPage />}></Route>
       </Routes>
     </>
   );
