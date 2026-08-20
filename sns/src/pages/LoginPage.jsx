@@ -17,7 +17,7 @@ function LoginPage() {
         userPassword,
       }),
     });
-    const data = await response.text();
+    const data = await response.json();
     console.log(data);
   };
   return (
@@ -35,7 +35,13 @@ function LoginPage() {
           <div className={styles.formGroup}>
             <label htmlFor="userId">아이디</label>
 
-            <input id="userId" type="text" placeholder="아이디를 입력하세요" />
+            <input
+              id="userId"
+              type="text"
+              placeholder="아이디를 입력하세요"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
           </div>
 
           {/* 비밀번호 */}
@@ -46,6 +52,8 @@ function LoginPage() {
               id="userPassword"
               type="password"
               placeholder="비밀번호를 입력하세요"
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
             />
           </div>
 
