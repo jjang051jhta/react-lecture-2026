@@ -19,6 +19,7 @@ function LoginPage() {
     });
     const data = await response.json();
     console.log(data);
+    localStorage.setItem("accessToken", data.data.accessToken);
   };
   return (
     <main className={styles.page}>
