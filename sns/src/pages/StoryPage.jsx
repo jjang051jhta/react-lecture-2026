@@ -17,9 +17,7 @@ function StoryPage() {
   }, []);
   return (
     <>
-      <h1>Story</h1>
       <StoryUploadForm loadStories={loadStories}></StoryUploadForm>
-      <hr></hr>
       <StoryList stories={stories}></StoryList>
     </>
   );

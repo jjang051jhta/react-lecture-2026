@@ -6,12 +6,20 @@ function StoryUploadForm({ loadStories }) {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
 
+  // 이미지 미리보기
+  const [preview, setPreview] = useState(null);
+
   const handleImage = (e) => {
     const file = e.target.files[0];
 
     if (!file) return;
 
+    // 실제 서버로 보낼 파일
     setImage(file);
+
+    // 미리보기용 URL
+    const previewUrl = URL.createObjectURL(file);
+    setPreview(previewUrl);
   };
 
   const saveStory = async (e) => {
@@ -41,15 +49,20 @@ function StoryUploadForm({ loadStories }) {
       body: formData,
     });
 
-    const data = await response.json();
+    if (response.ok) {
+      const data = await response.json();
 
-    console.log(data);
+      console.log(data);
 
-    setWriter("");
-    setContent("");
-    setImage(null);
+      // 입력값 초기화
+      setWriter("");
+      setContent("");
+      setImage(null);
+      setPreview(null);
 
-    loadStories();
+      // Story 목록 다시 가져오기
+      loadStories();
+    }
   };
 
   return (
@@ -57,7 +70,7 @@ function StoryUploadForm({ loadStories }) {
       <form className={styles.form} onSubmit={saveStory}>
         {/* 작성자 */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>작성자</label>
+          <label>작성자</label>
 
           <input
             className={styles.input}
@@ -70,11 +83,11 @@ function StoryUploadForm({ loadStories }) {
 
         {/* 내용 */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>내용</label>
+          <label>내용</label>
 
           <textarea
             className={styles.textarea}
-            placeholder="무슨 일이 있었나요?"
+            placeholder="내용을 작성하세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
@@ -82,15 +95,15 @@ function StoryUploadForm({ loadStories }) {
 
         {/* 이미지 */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>이미지</label>
+          <label>이미지</label>
 
           <div className={styles.fileBox}>
-            <label htmlFor="image" className={styles.fileButton}>
-              📷 이미지 선택
+            <label htmlFor="storyImage" className={styles.fileButton}>
+              이미지 선택
             </label>
 
             <input
-              id="image"
+              id="storyImage"
               className={styles.fileInput}
               type="file"
               accept="image/*"
@@ -98,12 +111,23 @@ function StoryUploadForm({ loadStories }) {
             />
 
             <span className={styles.fileName}>
-              {image ? image.name : "선택된 파일 없음"}
+              {image ? image.name : "선택된 이미지가 없습니다."}
             </span>
           </div>
         </div>
 
-        <button className={styles.submitButton} type="submit">
+        {/* 이미지 미리보기 */}
+        {preview && (
+          <div className={styles.previewBox}>
+            <img
+              src={preview}
+              alt="이미지 미리보기"
+              className={styles.previewImage}
+            />
+          </div>
+        )}
+
+        <button type="submit" className={styles.submitButton}>
           게시하기
         </button>
       </form>
