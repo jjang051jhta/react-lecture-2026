@@ -3,6 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/LoginPage.module.css";
 
 function LoginPage() {
+  const [userId, setUserId] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const login = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        userPassword,
+      }),
+    });
+    const data = await response.text();
+    console.log(data);
+  };
   return (
     <main className={styles.page}>
       <section className={styles.loginBox}>
@@ -13,7 +30,7 @@ function LoginPage() {
         </div>
 
         {/* 로그인 FORM */}
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={login}>
           {/* 아이디 */}
           <div className={styles.formGroup}>
             <label htmlFor="userId">아이디</label>

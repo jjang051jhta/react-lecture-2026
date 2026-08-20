@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../css/SignupPage.module.css";
-
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 function SignupPage() {
   const [userId, setUserId] = useState("");
   const [idMessage, setIdMessage] = useState("");
@@ -9,7 +10,7 @@ function SignupPage() {
   const [userName, setUserName] = useState("");
   const [profile, setProfile] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  const navigate = useNavigate();
   const handleUserId = async (e) => {
     const value = e.target.value;
 
@@ -53,7 +54,8 @@ function SignupPage() {
     e.preventDefault();
 
     if (!idAvailable) {
-      alert("사용 가능한 아이디를 입력해주세요.");
+      //alert("사용 가능한 아이디를 입력해주세요.");
+      toast.error("사용 가능한 아이디를 입력해주세요.");
       return;
     }
 
@@ -75,6 +77,8 @@ function SignupPage() {
     const data = await response.text();
 
     console.log(data);
+    toast.error("회원가입이 되었습니다.");
+    navigate("/login");
   };
 
   return (
