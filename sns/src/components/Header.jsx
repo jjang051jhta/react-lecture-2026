@@ -8,7 +8,9 @@ function Header() {
   const navigate = useNavigate();
   const accessToken = useAuthStore((state) => state.accessToken);
   const logout = useAuthStore((state) => state.logout);
-  const [member, setMember] = useState(null);
+  const member = useAuthStore((state) => state.member);
+  const setMember = useAuthStore((state) => state.setMember);
+  //const [member, setMember] = useState(null);
   const handleLogOut = () => {
     logout();
     toast.success("로그아웃되었습니다.");
@@ -38,17 +40,15 @@ function Header() {
         console.log("me===", data);
         if (!response.ok) {
           logout();
-          setMember(null);
           return;
         }
         setMember(data.data);
       } catch (error) {
         logout();
-        setMember(null);
       }
     };
     loadMember();
-  }, [accessToken, logout]);
+  }, [accessToken, logout, setMember]);
 
   return (
     <header className={styles.header}>

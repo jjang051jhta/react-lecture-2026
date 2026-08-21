@@ -11,6 +11,7 @@ function MyPage() {
   const navigate = useNavigate();
   const accessToken = useAuthStore((state) => state.accessToken);
   const logout = useAuthStore((state) => state.logout);
+  const setMember = useAuthStore((state) => state.setMember);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -52,6 +53,7 @@ function MyPage() {
         toast.error(data.message || "회원정보가 수정 실패했습니다.");
         return;
       }
+      setMember(data.data);
       toast.success("회원정보가 수정되었습니다.");
     } catch (error) {
       console.log(error);
