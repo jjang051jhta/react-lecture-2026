@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/LoginPage.module.css";
+import toast from "react-hot-toast";
+import useAuthStore from "../store/useAuthStore";
 
 function LoginPage() {
+  const loginStore = useAuthStore((state) => state.login);
+  const navigate = useNavigate();
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const login = async (e) => {
@@ -19,7 +23,14 @@ function LoginPage() {
     });
     const data = await response.json();
     console.log(data);
-    localStorage.setItem("accessToken", data.data.accessToken);
+    if (!response.ok) {
+      toast.error(data.message || "로그인에 실패했습니다.");
+      return;
+    }
+    //localStorage.setItem("accessToken", data.data.accessToken);
+    loginStore(data.data.accessToken);
+    toast.success("로그인 되었습니다.");
+    navigate("/");
   };
   return (
     <main className={styles.page}>

@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Header.module.css";
 import { useEffect, useState } from "react";
+import useAuthStore from "../store/useAuthStore";
+import toast from "react-hot-toast";
 
 function Header() {
+  const navigate = useNavigate();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const logout = useAuthStore((state) => state.logout);
   const [member, setMember] = useState(null);
+  const handleLogOut = () => {
+    logout();
+    toast.success("로그아웃되었습니다.");
+    navigate("/login");
+  };
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -12,27 +22,33 @@ function Header() {
     console.log("검색어:", keyword);
   };
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
+      setMember(null);
       return;
     }
+    console.log("무한루프.....");
     const loadMember = async () => {
-      const response = await fetch("http://localhost:8080/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const data = await response.json();
-      console.log("me===", data);
-      if (response.ok) {
+      try {
+        const response = await fetch("http://localhost:8080/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        console.log("me===", data);
+        if (!response.ok) {
+          logout();
+          setMember(null);
+          return;
+        }
         setMember(data.data);
-      } else {
-        localStorage.removeItem("accessToken");
+      } catch (error) {
+        logout();
         setMember(null);
       }
     };
     loadMember();
-  }, []);
+  }, [accessToken, logout]);
 
   return (
     <header className={styles.header}>
@@ -55,7 +71,7 @@ function Header() {
           {member ? (
             <>
               <span>{member.userName}</span>
-              <button>로그아웃</button>
+              <button onClick={handleLogOut}>로그아웃</button>
             </>
           ) : (
             <>
