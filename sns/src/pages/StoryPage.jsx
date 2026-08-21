@@ -8,19 +8,23 @@ function StoryPage() {
   const [stories, setStories] = useState([]);
   const loadStories = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/stories", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await fetch(
+        "http://localhost:8080/api/stories?page=1&size=10",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          method: "GET",
         },
-        method: "GET",
-      });
-      const data = await response.json();
-      console.log(data);
+      );
       if (!response.ok) {
         console.log("스토리 조회 실패");
         return;
       }
-      setStories(data);
+      const data = await response.json();
+      console.log("stories===", data);
+
+      setStories(data.content);
     } catch (error) {
       console.log(error);
     }
