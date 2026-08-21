@@ -7,6 +7,7 @@ import StoryPage from "./pages/StoryPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import { Toaster } from "react-hot-toast";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
@@ -38,10 +39,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<StoryPage />} />
-
           <Route path="/signup" element={<SignupPage />} />
-
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </main>
 

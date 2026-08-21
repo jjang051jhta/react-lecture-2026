@@ -70,7 +70,9 @@ function Header() {
         <nav className={styles.nav}>
           {member ? (
             <>
-              <span>{member.userName}</span>
+              <Link to="/mypage" className={styles.login}>
+                {member.userName}
+              </Link>
               <button onClick={handleLogOut}>로그아웃</button>
             </>
           ) : (
