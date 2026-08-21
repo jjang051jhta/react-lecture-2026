@@ -1,67 +1,87 @@
 import { useState } from "react";
 import styles from "../css/StoryUploadForm.module.css";
+import useAuthStore from "../store/useAuthStore";
+import toast from "react-hot-toast";
 
 function StoryUploadForm({ loadStories }) {
-  const [writer, setWriter] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-
-  // 이미지 미리보기
   const [preview, setPreview] = useState(null);
 
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const member = useAuthStore((state) => state.member);
+
+  // 이미지 선택
   const handleImage = (e) => {
     const file = e.target.files[0];
 
     if (!file) return;
 
-    // 실제 서버로 보낼 파일
     setImage(file);
 
-    // 미리보기용 URL
+    // 이미지 미리보기
     const previewUrl = URL.createObjectURL(file);
     setPreview(previewUrl);
   };
 
+  // 게시글 등록
   const saveStory = async (e) => {
     e.preventDefault();
 
-    if (writer.trim() === "") {
-      alert("작성자를 입력해 주세요.");
+    // 로그인 확인
+    if (!accessToken || !member) {
+      toast.error("로그인이 필요합니다.");
       return;
     }
 
+    // 내용 확인
     if (content.trim() === "") {
-      alert("내용을 작성해 주세요.");
+      toast.error("내용을 작성해 주세요.");
       return;
     }
 
     const formData = new FormData();
 
-    formData.append("writer", writer);
+    formData.append("writer", member.userName);
     formData.append("content", content);
 
     if (image) {
       formData.append("image", image);
     }
 
-    const response = await fetch("http://localhost:8080/api/stories", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("http://localhost:8080/api/stories", {
+        method: "POST",
 
-    if (response.ok) {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+
+        body: formData,
+      });
+
       const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.message || "게시글 등록에 실패했습니다.");
+        return;
+      }
 
       console.log(data);
 
       // 입력값 초기화
-      setWriter("");
       setContent("");
       setImage(null);
       setPreview(null);
 
+      toast.success("게시글이 등록되었습니다.");
+
       // Story 목록 다시 가져오기
       loadStories();
+    } catch (error) {
+      console.log(error);
+
+      toast.error("게시글 등록 중 오류가 발생했습니다.");
     }
   };
 
@@ -75,9 +95,8 @@ function StoryUploadForm({ loadStories }) {
           <input
             className={styles.input}
             type="text"
-            placeholder="이름을 쓰세요"
-            value={writer}
-            onChange={(e) => setWriter(e.target.value)}
+            value={member ? member.userName : ""}
+            disabled
           />
         </div>
 
