@@ -1,41 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../css/SignupPage.module.css";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useAuthStore from "../store/useAuthStore";
 function MyPage() {
   const [userId, setUserId] = useState("");
-  const [idMessage, setIdMessage] = useState("");
-  const [idAvailable, setIdAvailable] = useState(false);
-  const [userPassword, setUserPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [profile, setProfile] = useState(null);
   const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
-  const handleUserId = async (e) => {
-    const value = e.target.value;
-
-    setUserId(value);
-
-    if (value.trim() === "") {
-      setIdMessage("");
-      setIdAvailable(false);
-      return;
-    }
-
-    const response = await fetch(
-      `http://localhost:8080/api/member/check-userid?userId=${value}`,
-    );
-
-    const data = await response.json();
-
-    if (data.available) {
-      setIdMessage("사용 가능한 아이디입니다.");
-      setIdAvailable(true);
-    } else {
-      setIdMessage("이미 사용 중인 아이디입니다.");
-      setIdAvailable(false);
-    }
-  };
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const logout = useAuthStore((state) => state.logout);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -50,37 +25,71 @@ function MyPage() {
     setPreview(previewUrl);
   };
 
-  const saveMember = async (e) => {
+  const updateMember = async (e) => {
     e.preventDefault();
-
-    if (!idAvailable) {
-      //alert("사용 가능한 아이디를 입력해주세요.");
-      toast.error("사용 가능한 아이디를 입력해주세요.");
-      return;
-    }
 
     const formData = new FormData();
 
-    formData.append("userId", userId);
-    formData.append("userPassword", userPassword);
     formData.append("userName", userName);
 
     if (profile) {
       formData.append("profile", profile);
     }
+    //http method  post / get / delete / put
+    try {
+      const response = await fetch("http://localhost:8080/api/member/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        method: "PUT",
+        body: formData,
+      });
 
-    const response = await fetch("http://localhost:8080/api/member/signup", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await response.text();
-
-    console.log(data);
-    toast.error("회원가입이 되었습니다.");
-    navigate("/login");
+      const data = await response.json();
+      console.log("response", response);
+      if (!response.ok) {
+        console.log(data);
+        toast.error(data.message || "회원정보가 수정 실패했습니다.");
+        return;
+      }
+      toast.success("회원정보가 수정되었습니다.");
+    } catch (error) {
+      console.log(error);
+      toast.error("회원정보 수정 중 오류가 발생했습니다.");
+    }
   };
-
+  useEffect(() => {
+    if (!accessToken) {
+      toast.error("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+    const loadMember = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          toast.error(data.message || "회원정보를 불러올 수 없습니다.");
+          logout();
+          navigate("/login");
+          return;
+        }
+        setUserId(data.data.userId);
+        setUserName(data.data.userName);
+        if (data.data.profile) {
+          setPreview(`http://localhost:8080${data.data.profile}`);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("회원정보 조회 중 오류가 발생했습니다.");
+      }
+    };
+    loadMember();
+  }, [navigate, accessToken, logout]);
   return (
     <main className={styles.page}>
       <section className={styles.signupBox}>
@@ -89,7 +98,7 @@ function MyPage() {
           <p>이름과 프로필 이미지를 수정할 수 있습니다.</p>
         </div>
 
-        <form className={styles.form} onSubmit={saveMember}>
+        <form className={styles.form} onSubmit={updateMember}>
           {/* 프로필 이미지 */}
           <div className={styles.profileBox}>
             <label htmlFor="profile" className={styles.profileLabel}>
@@ -127,7 +136,6 @@ function MyPage() {
               placeholder="아이디를 입력하세요"
               value={userId}
               disabled
-              onChange={handleUserId}
             />
           </div>
 
